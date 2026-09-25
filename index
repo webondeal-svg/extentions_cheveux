@@ -335,6 +335,23 @@
   .progress-wrap{margin-top:0}
 }
 
+
+/* --- UX V4: core booking navigation works even when preview limits JavaScript --- */
+.flow-step:target{display:block;scroll-margin-top:90px}
+.flow:has(.flow-step:target){display:block}
+.flow:has(.flow-step:target) .flow-step.active{display:none}
+body:has(.flow-step:target) .modal{display:grid;place-items:center}
+body:has(.flow-step:target) #bookingStart{display:none}
+body:has(.flow-step:target) #pathGrid{display:none}
+.choice-input{position:absolute;opacity:0;pointer-events:none}
+.choice-input + .date-pill{display:flex;align-items:center;justify-content:center;text-align:center}
+.choice-input:checked + .date-pill{background:var(--ink);color:#fff;border-color:var(--ink)}
+@media (max-width:680px){
+  body:has(.flow-step:target) .modal{place-items:stretch}
+  .modal-close{top:calc(14px + env(safe-area-inset-top));right:14px}
+  .flow-step:target{scroll-margin-top:110px}
+}
+
 </style>
 </head>
 <body>
@@ -532,7 +549,7 @@
     <div class="flow" id="flow-photo" data-total="3">
       <a href="#bookingModal" class="flow-back" role="button"><span class="back-arrow">←</span> Retour</a>
       <div class="progress-wrap"><div class="progress-top"><span class="progress-label">Étape 1 sur 3</span><span>Devis photo</span></div><div class="progress-bar"><span></span></div></div>
-      <div class="flow-step active" data-step="1">
+      <div class="flow-step active" id="photo-step-1" data-step="1">
         <h3>Votre demande de devis</h3>
         <div class="form-grid">
           <div class="field"><label>Prénom</label><input placeholder="Votre prénom"></div>
@@ -540,83 +557,104 @@
           <div class="field full"><label>Résultat recherché</label><input id="intentInput" placeholder="Longueur, volume, transformation…"></div>
           <div class="field full"><label>Photos de vos cheveux</label><input type="file" multiple accept="image/*"></div>
         </div>
-        <div class="flow-actions"><button class="btn next-step">Continuer →</button></div>
+        <div class="flow-actions"><a class="btn next-step" href="#photo-step-2" data-next="2">Continuer →</a></div>
       </div>
-      <div class="flow-step" data-step="2">
+      <div class="flow-step" id="photo-step-2" data-step="2">
         <h3>Comment préférez-vous être recontactée ?</h3>
         <div class="option-grid">
           <button class="option-card selected" type="button">WhatsApp<br><small>Recevoir mon estimation rapidement</small></button>
           <button class="option-card" type="button">Téléphone<br><small>Être rappelée</small></button>
         </div>
-        <div class="flow-actions"><button class="btn prev-step">← Précédent</button><button class="btn next-step">Voir le récapitulatif →</button></div>
+        <div class="flow-actions"><a class="btn prev-step" href="#photo-step-1" data-prev="1">← Précédent</a><a class="btn next-step" href="#photo-step-3" data-next="3">Voir le récapitulatif →</a></div>
       </div>
-      <div class="flow-step" data-step="3">
+      <div class="flow-step" id="photo-step-3" data-step="3">
         <h3>Votre demande est prête</h3>
         <div class="summary-card"><strong>Devis extensions de cheveux</strong><p>Photos + objectif + coordonnées.</p><p>La professionnelle pourra ensuite confirmer le devis et vous proposer la suite.</p></div>
-        <div class="flow-actions"><button class="btn prev-step">← Précédent</button><button class="btn finish-flow">Envoyer ma demande →</button></div>
+        <div class="flow-actions"><a class="btn prev-step" href="#photo-step-2" data-prev="2">← Précédent</a><a class="btn finish-flow" href="#photo-step-done">Envoyer ma demande →</a></div>
       </div>
-      <div class="flow-step" data-step="done">
+      <div class="flow-step" id="photo-step-done" data-step="done">
         <div class="confirm-icon">✓</div><h3>Demande envoyée</h3><p style="color:var(--muted)">Dans le site final, la cliente recevra ici la confirmation de sa demande de devis.</p>
-        <div class="flow-actions"><button class="btn close-flow">Terminer</button></div>
+        <div class="flow-actions"><a class="btn close-flow" href="#top">Terminer</a></div>
       </div>
     </div>
 
     <div class="flow" id="flow-physical" data-total="3">
       <a href="#bookingModal" class="flow-back" role="button"><span class="back-arrow">←</span> Retour</a>
       <div class="progress-wrap"><div class="progress-top"><span class="progress-label">Étape 1 sur 3</span><span>Diagnostic</span></div><div class="progress-bar"><span></span></div></div>
-      <div class="flow-step active" data-step="1">
+      <div class="flow-step active" id="physical-step-1" data-step="1">
         <h3>Choisir un créneau de diagnostic</h3>
         <p style="color:var(--muted)">Exemple de disponibilités pour visualiser le fonctionnement.</p>
-        <div class="date-row"><button class="date-pill">Mar. 10:00</button><button class="date-pill">Mer. 14:30</button><button class="date-pill">Jeu. 17:00</button><button class="date-pill">Sam. 11:30</button></div>
-        <div class="flow-actions"><button class="btn next-step">Continuer →</button></div>
+        <div class="date-row">
+          <input class="choice-input" type="radio" name="physical-slot" id="physical-slot-1"><label class="date-pill" for="physical-slot-1">Mar. 10:00</label>
+          <input class="choice-input" type="radio" name="physical-slot" id="physical-slot-2"><label class="date-pill" for="physical-slot-2">Mer. 14:30</label>
+          <input class="choice-input" type="radio" name="physical-slot" id="physical-slot-3"><label class="date-pill" for="physical-slot-3">Jeu. 17:00</label>
+          <input class="choice-input" type="radio" name="physical-slot" id="physical-slot-4"><label class="date-pill" for="physical-slot-4">Sam. 11:30</label>
+        </div>
+        <div class="flow-actions"><a class="btn next-step" href="#physical-step-2" data-next="2">Continuer →</a></div>
       </div>
-      <div class="flow-step" data-step="2">
+      <div class="flow-step" id="physical-step-2" data-step="2">
         <h3>Vos coordonnées</h3>
         <div class="form-grid"><div class="field"><label>Prénom</label><input placeholder="Votre prénom"></div><div class="field"><label>Téléphone</label><input placeholder="06 00 00 00 00"></div><div class="field full"><label>Email</label><input type="email" placeholder="vous@email.fr"></div></div>
-        <div class="flow-actions"><button class="btn prev-step">← Précédent</button><button class="btn next-step">Confirmer le diagnostic →</button></div>
+        <div class="flow-actions"><a class="btn prev-step" href="#physical-step-1" data-prev="1">← Précédent</a><a class="btn next-step" href="#physical-step-3" data-next="3">Confirmer le diagnostic →</a></div>
       </div>
-      <div class="flow-step" data-step="3">
+      <div class="flow-step" id="physical-step-3" data-step="3">
         <h3>Confirmer le diagnostic</h3><div class="summary-card"><strong>Diagnostic extensions</strong><p>Créneau sélectionné + coordonnées.</p><p>Le devis sera établi lors du rendez-vous.</p></div>
-        <div class="flow-actions"><button class="btn prev-step">← Précédent</button><button class="btn finish-flow">Confirmer →</button></div>
+        <div class="flow-actions"><a class="btn prev-step" href="#physical-step-2" data-prev="2">← Précédent</a><a class="btn finish-flow" href="#physical-step-done">Confirmer →</a></div>
       </div>
-      <div class="flow-step" data-step="done"><div class="confirm-icon">✓</div><h3>Diagnostic réservé</h3><p style="color:var(--muted)">Dans le site final, un message de confirmation serait envoyé automatiquement.</p><div class="flow-actions"><button class="btn close-flow">Terminer</button></div></div>
+      <div class="flow-step" id="physical-step-done" data-step="done"><div class="confirm-icon">✓</div><h3>Diagnostic réservé</h3><p style="color:var(--muted)">Dans le site final, un message de confirmation serait envoyé automatiquement.</p><div class="flow-actions"><a class="btn close-flow" href="#top">Terminer</a></div></div>
     </div>
 
     <div class="flow" id="flow-quoted" data-total="3">
       <a href="#bookingModal" class="flow-back" role="button"><span class="back-arrow">←</span> Retour</a>
       <div class="progress-wrap"><div class="progress-top"><span class="progress-label">Étape 1 sur 3</span><span>Réservation pose</span></div><div class="progress-bar"><span></span></div></div>
-      <div class="flow-step active" data-step="1">
-        <h3>Choisir votre créneau de pose</h3><div class="date-row"><button class="date-pill">Vendredi 9:00</button><button class="date-pill">Samedi 13:00</button><button class="date-pill">Mardi 15:30</button></div><div class="flow-actions"><button class="btn next-step">Continuer →</button></div>
+      <div class="flow-step active" id="quoted-step-1" data-step="1">
+        <h3>Choisir votre créneau de pose</h3>
+        <div class="date-row">
+          <input class="choice-input" type="radio" name="quoted-slot" id="quoted-slot-1"><label class="date-pill" for="quoted-slot-1">Vendredi 9:00</label>
+          <input class="choice-input" type="radio" name="quoted-slot" id="quoted-slot-2"><label class="date-pill" for="quoted-slot-2">Samedi 13:00</label>
+          <input class="choice-input" type="radio" name="quoted-slot" id="quoted-slot-3"><label class="date-pill" for="quoted-slot-3">Mardi 15:30</label>
+        </div>
+        <div class="flow-actions"><a class="btn next-step" href="#quoted-step-2" data-next="2">Continuer →</a></div>
       </div>
-      <div class="flow-step" data-step="2">
-        <h3>Votre acompte</h3><p style="color:var(--muted)">L’acompte permet de bloquer définitivement le rendez-vous.</p><div class="summary-card"><strong>Paiement sécurisé</strong><p>Dans la version finale, le montant correspondra à l’acompte prévu sur le devis.</p></div><div class="flow-actions"><button class="btn prev-step">← Précédent</button><button class="btn next-step">Continuer vers le paiement →</button></div>
+      <div class="flow-step" id="quoted-step-2" data-step="2">
+        <h3>Votre acompte</h3><p style="color:var(--muted)">L’acompte permet de bloquer définitivement le rendez-vous.</p><div class="summary-card"><strong>Paiement sécurisé</strong><p>Dans la version finale, le montant correspondra à l’acompte prévu sur le devis.</p></div><div class="flow-actions"><a class="btn prev-step" href="#quoted-step-1" data-prev="1">← Précédent</a><a class="btn next-step" href="#quoted-step-3" data-next="3">Continuer vers le paiement →</a></div>
       </div>
-      <div class="flow-step" data-step="3">
-        <h3>Récapitulatif</h3><div class="summary-card"><strong>Pose d’extensions</strong><p>Créneau + acompte.</p><p>Le rendez-vous sera confirmé après paiement.</p></div><div class="flow-actions"><button class="btn prev-step">← Précédent</button><button class="btn finish-flow">Simuler le paiement →</button></div>
+      <div class="flow-step" id="quoted-step-3" data-step="3">
+        <h3>Récapitulatif</h3><div class="summary-card"><strong>Pose d’extensions</strong><p>Créneau + acompte.</p><p>Le rendez-vous sera confirmé après paiement.</p></div><div class="flow-actions"><a class="btn prev-step" href="#quoted-step-2" data-prev="2">← Précédent</a><a class="btn finish-flow" href="#quoted-step-done">Simuler le paiement →</a></div>
       </div>
-      <div class="flow-step" data-step="done"><div class="confirm-icon">✓</div><h3>Rendez-vous confirmé</h3><p style="color:var(--muted)">Acompte validé et créneau bloqué dans la version finale.</p><div class="flow-actions"><button class="btn close-flow">Terminer</button></div></div>
+      <div class="flow-step" id="quoted-step-done" data-step="done"><div class="confirm-icon">✓</div><h3>Rendez-vous confirmé</h3><p style="color:var(--muted)">Acompte validé et créneau bloqué dans la version finale.</p><div class="flow-actions"><a class="btn close-flow" href="#top">Terminer</a></div></div>
     </div>
 
     <div class="flow" id="flow-lashes" data-total="4">
       <a href="#bookingModal" class="flow-back" role="button"><span class="back-arrow">←</span> Retour</a>
       <div class="progress-wrap"><div class="progress-top"><span class="progress-label">Étape 1 sur 4</span><span>Réservation cils</span></div><div class="progress-bar"><span></span></div></div>
-      <div class="flow-step active" data-step="1">
+      <div class="flow-step active" id="lashes-step-1" data-step="1">
         <h3>Choisir votre prestation</h3><p style="color:var(--muted)">Pas de diagnostic préalable pour les cils.</p>
-        <div class="date-row"><button class="date-pill">Pose complète</button><button class="date-pill">Remplissage</button><button class="date-pill">Dépose</button></div>
-        <div class="flow-actions"><button class="btn next-step">Choisir mon créneau →</button></div>
+        <div class="date-row">
+          <input class="choice-input" type="radio" name="lash-service" id="lash-service-1"><label class="date-pill" for="lash-service-1">Pose complète</label>
+          <input class="choice-input" type="radio" name="lash-service" id="lash-service-2"><label class="date-pill" for="lash-service-2">Remplissage</label>
+          <input class="choice-input" type="radio" name="lash-service" id="lash-service-3"><label class="date-pill" for="lash-service-3">Dépose</label>
+        </div>
+        <div class="flow-actions"><a class="btn next-step" href="#lashes-step-2" data-next="2">Choisir mon créneau →</a></div>
       </div>
-      <div class="flow-step" data-step="2">
-        <h3>Choisir votre créneau</h3><div class="date-row"><button class="date-pill">Mardi 10:00</button><button class="date-pill">Jeudi 14:30</button><button class="date-pill">Vendredi 17:00</button><button class="date-pill">Samedi 11:00</button></div>
-        <div class="flow-actions"><button class="btn prev-step">← Précédent</button><button class="btn next-step">Continuer →</button></div>
+      <div class="flow-step" id="lashes-step-2" data-step="2">
+        <h3>Choisir votre créneau</h3>
+        <div class="date-row">
+          <input class="choice-input" type="radio" name="lash-slot" id="lash-slot-1"><label class="date-pill" for="lash-slot-1">Mardi 10:00</label>
+          <input class="choice-input" type="radio" name="lash-slot" id="lash-slot-2"><label class="date-pill" for="lash-slot-2">Jeudi 14:30</label>
+          <input class="choice-input" type="radio" name="lash-slot" id="lash-slot-3"><label class="date-pill" for="lash-slot-3">Vendredi 17:00</label>
+          <input class="choice-input" type="radio" name="lash-slot" id="lash-slot-4"><label class="date-pill" for="lash-slot-4">Samedi 11:00</label>
+        </div>
+        <div class="flow-actions"><a class="btn prev-step" href="#lashes-step-1" data-prev="1">← Précédent</a><a class="btn next-step" href="#lashes-step-3" data-next="3">Continuer →</a></div>
       </div>
-      <div class="flow-step" data-step="3">
+      <div class="flow-step" id="lashes-step-3" data-step="3">
         <h3>Vos coordonnées</h3><div class="form-grid"><div class="field"><label>Prénom</label><input placeholder="Votre prénom"></div><div class="field"><label>Téléphone</label><input placeholder="06 00 00 00 00"></div><div class="field full"><label>Email</label><input type="email" placeholder="vous@email.fr"></div></div>
-        <div class="flow-actions"><button class="btn prev-step">← Précédent</button><button class="btn next-step">Continuer vers l’acompte →</button></div>
+        <div class="flow-actions"><a class="btn prev-step" href="#lashes-step-2" data-prev="2">← Précédent</a><a class="btn next-step" href="#lashes-step-4" data-next="4">Continuer vers l’acompte →</a></div>
       </div>
-      <div class="flow-step" data-step="4">
-        <h3>Confirmer avec l’acompte</h3><div class="summary-card"><strong>Votre réservation cils</strong><p>Prestation + créneau + coordonnées.</p><p>L’acompte bloque le rendez-vous.</p></div><div class="flow-actions"><button class="btn prev-step">← Précédent</button><button class="btn finish-flow">Simuler le paiement →</button></div>
+      <div class="flow-step" id="lashes-step-4" data-step="4">
+        <h3>Confirmer avec l’acompte</h3><div class="summary-card"><strong>Votre réservation cils</strong><p>Prestation + créneau + coordonnées.</p><p>L’acompte bloque le rendez-vous.</p></div><div class="flow-actions"><a class="btn prev-step" href="#lashes-step-3" data-prev="3">← Précédent</a><a class="btn finish-flow" href="#lashes-step-done">Simuler le paiement →</a></div>
       </div>
-      <div class="flow-step" data-step="done"><div class="confirm-icon">✓</div><h3>Rendez-vous confirmé</h3><p style="color:var(--muted)">Dans la version finale, la cliente recevra sa confirmation après paiement de l’acompte.</p><div class="flow-actions"><button class="btn close-flow">Terminer</button></div></div>
+      <div class="flow-step" id="lashes-step-done" data-step="done"><div class="confirm-icon">✓</div><h3>Rendez-vous confirmé</h3><p style="color:var(--muted)">Dans la version finale, la cliente recevra sa confirmation après paiement de l’acompte.</p><div class="flow-actions"><a class="btn close-flow" href="#top">Terminer</a></div></div>
     </div>
 
     <div class="demo-note">Maquette interactive : les actions simulent le futur parcours. Aucun rendez-vous ni paiement réel n’est enregistré.</div>
@@ -687,14 +725,14 @@
     grid.querySelectorAll('.option-card').forEach(p=>p.classList.remove('selected')); card.classList.add('selected');
   }));
 
-  document.querySelectorAll('.next-step').forEach(btn=>btn.addEventListener('click',()=>{
-    const flow=btn.closest('.flow'); const current=flow.querySelector('.flow-step.active'); const n=parseInt(current.dataset.step,10); setStep(flow,n+1);
+  document.querySelectorAll('.next-step').forEach(btn=>btn.addEventListener('click',(e)=>{
+    e.preventDefault(); const flow=btn.closest('.flow'); const n=parseInt(btn.dataset.next,10); setStep(flow,n);
   }));
-  document.querySelectorAll('.prev-step').forEach(btn=>btn.addEventListener('click',()=>{
-    const flow=btn.closest('.flow'); const current=flow.querySelector('.flow-step.active'); const n=parseInt(current.dataset.step,10); setStep(flow,Math.max(1,n-1));
+  document.querySelectorAll('.prev-step').forEach(btn=>btn.addEventListener('click',(e)=>{
+    e.preventDefault(); const flow=btn.closest('.flow'); const n=parseInt(btn.dataset.prev,10); setStep(flow,n);
   }));
-  document.querySelectorAll('.finish-flow').forEach(btn=>btn.addEventListener('click',()=>{const flow=btn.closest('.flow');setStep(flow,'done');}));
-  document.querySelectorAll('.close-flow').forEach(btn=>btn.addEventListener('click',closeModal));
+  document.querySelectorAll('.finish-flow').forEach(btn=>btn.addEventListener('click',(e)=>{e.preventDefault();const flow=btn.closest('.flow');setStep(flow,'done');}));
+  document.querySelectorAll('.close-flow').forEach(btn=>btn.addEventListener('click',(e)=>{e.preventDefault();closeModal();history.replaceState(null,'',location.pathname+location.search+'#top');}));
 
   const closeBtn=document.querySelector('.modal-close');
   if(closeBtn) closeBtn.addEventListener('click',(e)=>{e.preventDefault();closeModal();history.replaceState(null,'',location.pathname+location.search+'#top');});
