@@ -1,0 +1,64 @@
+<section class="hero hero-page hero-court">
+  <div class="wrap">
+    <p class="fil"><a href="index.html">Accueil</a> <span aria-hidden="true">/</span> Infos pratiques</p>
+    <h1 class="display display-page">Infos pratiques</h1>
+  </div>
+</section>
+
+<section class="section section-infos">
+  <div class="wrap infos-grille">
+    <div class="infos-col">
+      <article class="info o-1" aria-labelledby="ou-titre">
+        <svg class="info-icone" aria-hidden="true"><use href="#i-lieu"/></svg>
+        <h2 id="ou-titre" class="h3">Où nous trouver</h2>
+        <p>À Levallois-Perret (92300), sur rendez-vous. L'adresse exacte vous est communiquée à la réservation.</p>
+      </article>
+      <article class="info o-2" aria-labelledby="horaires-titre">
+        <svg class="info-icone" aria-hidden="true"><use href="#i-horloge"/></svg>
+        <h2 id="horaires-titre" class="h3">Horaires</h2>
+        <table class="horaires" data-horaires>
+          <tbody>
+            <tr data-jours="1 2 3 4 5"><th scope="row">Du lundi au vendredi</th><td>11 h – 20 h</td></tr>
+            <tr data-jours="6 0"><th scope="row">Samedi et dimanche</th><td>14 h – 18 h</td></tr>
+          </tbody>
+        </table>
+        <p class="note-petite">Sur rendez-vous uniquement.</p>
+      </article>
+      <article class="info o-4" aria-labelledby="contact-titre">
+        <svg class="info-icone" aria-hidden="true"><use href="#i-tel"/></svg>
+        <h2 id="contact-titre" class="h3">Contact</h2>
+        <ul class="contacts">
+          <li><a href="{{lien.telephone}}"><svg aria-hidden="true"><use href="#i-tel"/></svg>Téléphone et WhatsApp : <span class="insecable">06 33 07 53 47</span></a></li>
+          <li><a href="{{lien.email}}"><svg aria-hidden="true"><use href="#i-mail"/></svg>E-mail : ayeterian@gmail.com</a></li>
+          <li><a href="{{lien.instagram}}" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-insta"/></svg>Instagram : @theglamroom.paris</a></li>
+        </ul>
+      </article>
+      <figure class="info-photo o-7">
+        <img src="assets/img/espace-soin-640.webp" srcset="assets/img/espace-soin-640.webp 640w, assets/img/espace-soin-1000.webp 1000w" sizes="(min-width: 900px) 40vw, 100vw" width="640" height="800" alt="L'espace de soin de The Glam Room" loading="lazy" decoding="async">
+        <figcaption>L'espace de soin, à Levallois-Perret</figcaption>
+      </figure>
+    </div>
+    <div class="infos-col">
+      <article class="info info-large o-3" aria-labelledby="reserver-titre">
+        <svg class="info-icone" aria-hidden="true"><use href="#i-agenda"/></svg>
+        <h2 id="reserver-titre" class="h3">Réserver</h2>
+        {{> routes}}
+      </article>
+      <article class="info o-5" aria-labelledby="paiement-titre">
+        <svg class="info-icone" aria-hidden="true"><use href="#i-carte"/></svg>
+        <h2 id="paiement-titre" class="h3">Paiement</h2>
+        <ul class="liste-coches">
+          <li><svg aria-hidden="true"><use href="#i-coche"/></svg>En 3 fois sans frais avec Klarna, dès 100 €, sous réserve d'acceptation par Klarna</li>
+          <li><svg aria-hidden="true"><use href="#i-coche"/></svg>En espèces</li>
+          <li><svg aria-hidden="true"><use href="#i-coche"/></svg>Par Revolut</li>
+          <li><svg aria-hidden="true"><use href="#i-coche"/></svg>Par lien de paiement sécurisé</li>
+          <li><svg aria-hidden="true"><use href="#i-coche"/></svg>Par carte sans contact</li>
+        </ul>
+      </article>
+      <article class="info a-bloc o-6" aria-labelledby="acompte-titre">
+        <h2 id="acompte-titre" class="h3">Acompte et report <small>extensions de cheveux</small><span class="tbc">formulation juridique en attente (Imen), ne pas publier telle quelle</span></h2>
+        <p>Un acompte de 20 % confirme votre rendez-vous ; il est déduit du prix de la pose. Les cheveux étant commandés spécialement pour vous, il n'est pas remboursable une fois le rendez-vous validé. Vous pouvez décaler votre rendez-vous jusqu'à 48 h avant.</p>
+      </article>
+    </div>
+  </div>
+</section>

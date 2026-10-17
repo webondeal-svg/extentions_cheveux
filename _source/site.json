@@ -1,0 +1,64 @@
+{
+  "client": "The Glam Room",
+  "gabarit": "gabarit",
+  "liens": {
+    "reservation.cils": "https://glamlash.mytreatwell.fr/services.html",
+    "reservation.cheveux": "https://www.planity.com/the-glam-room-92300-levallois-perret",
+    "whatsapp.premiere_pose": "https://wa.me/33633075347?text=Bonjour%20Agn%C3%A8s%2C%20je%20souhaite%20des%20extensions%20de%20cheveux.%20Je%20vous%20envoie%20mes%20photos%20pour%20le%20diagnostic.",
+    "whatsapp.contact": "https://wa.me/33633075347",
+    "telephone": "tel:+33633075347",
+    "email": "mailto:ayeterian@gmail.com",
+    "instagram": "https://www.instagram.com/theglamroom.paris/",
+    "avis.treatwell": "https://www.treatwell.fr/salon/glam-lash/commentaires/"
+  },
+  "pages": [
+    {
+      "fichier": "index.html",
+      "source": "accueil.html",
+      "titre": "The Glam Room | Cils et extensions de cheveux à Levallois",
+      "description": "Extensions de cils et de cheveux sur rendez-vous à Levallois-Perret, 7 jours sur 7. Tarifs affichés, paiement en 3 fois sans frais avec Klarna.",
+      "barre": "barre-rdv",
+      "classe": "p-accueil"
+    },
+    {
+      "fichier": "extensions-de-cheveux.html",
+      "source": "extensions.html",
+      "titre": "Extensions de cheveux à Levallois-Perret | The Glam Room",
+      "description": "Bandes adhésives et Butterfly posées sur mesure à Levallois-Perret. Dès 299 €, coupe et mise en forme incluses, paiement en 3 fois sans frais.",
+      "barre": "barre-extensions",
+      "classe": "p-extensions"
+    },
+    {
+      "fichier": "cils.html",
+      "source": "cils.html",
+      "titre": "Extensions de cils à Levallois-Perret | The Glam Room",
+      "description": "Cil à cil, mixte, volume russe, rehaussement et brow lift à Levallois-Perret. Noté 5,0 sur Treatwell, 205 avis vérifiés.",
+      "barre": "barre-cils",
+      "classe": "p-cils"
+    },
+    {
+      "fichier": "infos-pratiques.html",
+      "source": "infos.html",
+      "titre": "Horaires, accès et paiements | The Glam Room",
+      "description": "The Glam Room vous reçoit sur rendez-vous à Levallois-Perret, 7 jours sur 7 : horaires, réservation, moyens de paiement et contact.",
+      "barre": "barre-rdv",
+      "classe": "p-infos"
+    },
+    {
+      "fichier": "mentions-legales.html",
+      "source": "mentions.html",
+      "titre": "Mentions légales | The Glam Room",
+      "description": "Mentions légales du site The Glam Room, institut de cils et d'extensions de cheveux à Levallois-Perret.",
+      "barre": "barre-rdv",
+      "classe": "p-legal"
+    },
+    {
+      "fichier": "confidentialite.html",
+      "source": "confidentialite.html",
+      "titre": "Confidentialité | The Glam Room",
+      "description": "Comment The Glam Room traite vos données : pas de formulaire, pas de cookie publicitaire, réservation sur Treatwell et Planity.",
+      "barre": "barre-rdv",
+      "classe": "p-legal"
+    }
+  ]
+}
