@@ -36,7 +36,17 @@
   // Menu mobile : se referme après un clic sur un lien ou avec Échap
   var menu = document.querySelector('[data-menu]');
   if (menu) {
-    menu.addEventListener('click', function (e) { if (e.target.closest('a')) menu.removeAttribute('open'); });
+    var syncMenu = function () {
+      document.body.classList.toggle('menu-ouvert', menu.hasAttribute('open'));
+    };
+    menu.addEventListener('toggle', syncMenu);
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest('a')) {
+        menu.removeAttribute('open');
+        syncMenu();
+      }
+    });
+    syncMenu();
   }
 
   // Choix de réservation : fenêtre accessible (Échap, focus, retour au bouton)
